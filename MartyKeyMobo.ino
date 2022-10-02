@@ -18,19 +18,33 @@ void setup() {
   martykey[i] = new MartyKeyboard(0x20+i,4+i);
   }
 
-  menu.addMenu("DISP");
-  menu.addMenu("CHRD");
+  menu.addMenu("DISP");//0
+  menu.addMenu("CHRD");//1
   menu.addVal ("OFF ");
   menu.addVal ("MAJ ");
   menu.addVal ("MIN ");
+  
+  menu.addMenu("DSCO");//2
+  menu.addVal ("OFF ");
+  menu.addVal ("ON  ");
+  
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  
+  menu.poll();
     for(int i=0;i<5;i++){
 
   martykey[i]->poll();
   currentNote = martykey[i]->getLatestNote();
+  
+  if(menu.getVal(2) == 1){
+    martykey[i]->setMode(MartyKeyboard::Mode::DISCO,true);
+  }
+  else{
+    martykey[i]->setMode(MartyKeyboard::Mode::DISCO,false);
+  }
+
   if(currentNote !=255){
     noteName[0] = noteNames[currentNote % 12];
     noteName[1] = ' '; 
@@ -45,9 +59,10 @@ void loop() {
   }
   
   }
-  menu.poll();
   
   if(menu.getMenu() == 0 /* disp */) {
     menu.print(noteName);
   }
+
+
 }
