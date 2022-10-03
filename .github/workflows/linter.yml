@@ -1,14 +1,4 @@
----
-#################################
-#################################
-## Super Linter GitHub Actions ##
-#################################
-#################################
-name: Lint Code Base
-
-#############################
-# Start the job on all push #
-#############################
+name: Lint and format
 on:
   pull_request:
     branches: [main]
@@ -17,6 +7,27 @@ on:
 # Set the Job #
 ###############
 jobs:
+  beautify:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          
+      - name: Run beautysh
+        uses: illvart/beautysh-action@latest
+        with:
+          # Pass beautysh options in args, for example:
+          args: '*.sh --indent-size 4'
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: '[auto] ci: apply beautysh changes'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
   build:
     # Name the Job
     name: Lint Code Base
@@ -27,12 +38,22 @@ jobs:
     # Load all steps #
     ##################
     steps:
+      ##########################
+      # Checkout the code base #
+      ##########################
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper
+          # list of changed files within `super-linter`
+          fetch-depth: 0
+
       ################################
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
         uses: github/super-linter@v4
-      - name: Bash shell beautifier
-        # You may pin to the exact commit or the version.
-        # uses: illvart/beautysh-action@b97bb857aa544ac5e02aecbe84a2ee6ec0fd91b7
-        uses: illvart/beautysh-action@v1.0.0
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
