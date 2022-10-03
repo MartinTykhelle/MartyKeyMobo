@@ -15,7 +15,6 @@
 MartyKeyboard *martykey[8];
 LEDMenu menu(0x70, 7, 8, 6);
 
-
 char noteNames[13] = { 'C', 'C', 'D', 'D', 'E', 'F', 'F', 'G', 'G', 'A', 'A', 'B', 'C' };
 uint8_t semiTones[5] = { 1, 3, 6, 8, 10 };
 char noteName[4];
