@@ -11,8 +11,12 @@
 #define MENU_CHORD_MIN7 7
 #define MENU_DISCO 2
 
+this should cause errors
 
-MartyKeyboard *martykey[8];
+;
+;
+;
+M;artyKeyboard *martykey[8];
 LEDMenu menu(0x70, 7, 8, 6);
 
 
