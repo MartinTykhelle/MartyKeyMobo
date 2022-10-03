@@ -10,9 +10,6 @@ name: Lint Code Base
 # Start the job on all push #
 #############################
 on:
-  push:
-    branches-ignore: [main]
-    # Remove the line above to run when pushing to master
   pull_request:
     branches: [main]
 
@@ -35,3 +32,7 @@ jobs:
       ################################
       - name: Lint Code Base
         uses: github/super-linter@v4
+      - name: Bash shell beautifier
+        # You may pin to the exact commit or the version.
+        # uses: illvart/beautysh-action@b97bb857aa544ac5e02aecbe84a2ee6ec0fd91b7
+        uses: illvart/beautysh-action@v1.0.0
