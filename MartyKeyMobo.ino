@@ -11,6 +11,12 @@
 #define MENU_CHORD_MIN7 7
 #define MENU_DISCO 2
 
+introducing an error
+asasdasd
+asdasd
+asdasd
+asdasd
+
 
 MartyKeyboard *martykey[8];
 LEDMenu menu(0x70, 7, 8, 6);
